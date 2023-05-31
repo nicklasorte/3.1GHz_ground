@@ -10,6 +10,8 @@ https://www.mathworks.com/help/antenna/ref/rfprop.longleyrice.html
 
 (Note that this uses the Matlab Terrain Database --> gmted2010)
 
+https://www.mathworks.com/help/map/access-basemaps-terrain-geographic-globe.html
+
 By default, the geographic globe uses terrain data hosted by MathWorks and derived from the GMTED2010 model by the USGS and NGA. 
 You need an active internet connection to access this terrain data, and you cannot download it.
 
