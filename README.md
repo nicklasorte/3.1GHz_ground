@@ -4,9 +4,14 @@ To run ITM (propagation model) you'll need to download some files (6GBs: Too big
 
 (Place all the files from the Terrain Folder ("USGS") to the following path --> C:\USGS
 
+
 Another way to calculate path loss with ITM is through the Matlab Longley-Rice propagation model.
 
 https://www.mathworks.com/help/antenna/ref/rfprop.longleyrice.html
+
+Note: You will need the Antenna Toolbox.
+
+https://www.mathworks.com/products/antenna.html
 
 (Note that this uses the Matlab Terrain Database --> gmted2010)
 
