@@ -1,10 +1,12 @@
-To run ITM (propagation model) you'll need to download some files (6GBs: Too big to upload here.) (Contant nlasorte@ntia.gov for access to files.)
+To run ITM (propagation model) you'll need to download some files (6GBs: Too big to upload here.) 
+
+https://sfc.doc.gov/w/f-4209b4bd-c19b-41aa-b8ba-a9d10c453fe3
+
+(Contant nlasorte@ntia.gov if you can't access the terrain database files.)
 
 (Keeping the same terrain database removes one factor that causes differences between the results.) 
 
 (Place all the files from the Terrain Folder ("USGS") to the following path --> C:\USGS
-
-
 
 
 ========================================================================================================
@@ -38,4 +40,6 @@ https://www.mathworks.com/products/compiler/matlab-runtime.html
 Download the R2022b (9.13) release and install on your machine.
 
 When you run the analysis, you will still need an active internet connection to access the Matlab terrain data.
+
+In this case, a basic version of Matlab is only needed to initalize the simulation parameters.
 
