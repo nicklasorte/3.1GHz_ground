@@ -29,3 +29,13 @@ TIREM can also be calculated through Matlab.
 https://www.mathworks.com/help/antenna/ref/rfprop.tirem.html
 
 
+========================================================================================================
+
+If you can't download the ITM code and Terrain Database (6GB) and don't have the antenna toolbox, there is a matlab runtime version available that allows you to run the analysis.
+
+https://www.mathworks.com/products/compiler/matlab-runtime.html
+
+Download the R2022b (9.13) release and install on your machine.
+
+When you run the analysis, you will still need an active internet connection to access the Matlab terrain data.
+
