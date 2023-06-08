@@ -8,6 +8,12 @@ This will perform the calculation.
 
 ==========================================================================
 
+Military Installation Information is Publicly Available:
+
+https://catalog.data.gov/dataset/tiger-line-shapefile-2019-nation-u-s-military-installation-national-shapefile
+
+==========================================================================
+
 The simulation will output Excel files that contain all the Link Budget information, so that the calculations can be checked.
 
 For Example: to check the power received (from each Base Station to the Federal System):
