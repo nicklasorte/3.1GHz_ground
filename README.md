@@ -10,7 +10,13 @@ This will perform the calculation.
 
 There is an option to run the simulation with the parallel toolbox. (If you have it.)
 
+https://www.mathworks.com/products/parallel-computing.html
+
 The "parallel" functions relate to the simulation points for a specific location.
+
+For example, if a server has 24 cores, but there are only 10 protection points for a specific location, only 10 cores will be used.
+
+Parallel functions include: Pathloss, Movelist, Movelist with Mitigation, and Aggregate Check.
 
 ==========================================================================
 
