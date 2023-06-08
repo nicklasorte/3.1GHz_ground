@@ -6,6 +6,11 @@ Then run the file "init_run_sim_folder_ground_based_rev1_github_check.m"
 
 This will perform the calculation.
 
+==========================================================================
+
+There is an option to run the simulation with the parallel toolbox. (If you have it.)
+
+The "parallel" functions relate to the simulation points for a specific location.
 
 ==========================================================================
 
@@ -20,9 +25,9 @@ https://sfc.doc.gov/w/f-4209b4bd-c19b-41aa-b8ba-a9d10c453fe3
 (Place all the files from the Terrain Folder ("USGS") to the following path --> C:\USGS
 
 
-========================================================================================================
+=========================================================================================
 
-Another way to calculate path loss with ITM is through the Matlab Longley-Rice propagation model.
+Another way to calculate path loss with ITM is through the Matlab Longley-Rice propagation model. (This option will be added soon.)
 
 https://www.mathworks.com/help/antenna/ref/rfprop.longleyrice.html
 
@@ -42,7 +47,7 @@ TIREM can also be calculated through Matlab.
 https://www.mathworks.com/help/antenna/ref/rfprop.tirem.html
 
 
-========================================================================================================
+======================================================================================
 
 If you can't download the ITM code and Terrain Database (6GB) and don't have the antenna toolbox, there is a matlab runtime version available that allows you to run the analysis.
 
