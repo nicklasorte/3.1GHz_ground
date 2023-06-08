@@ -140,7 +140,7 @@ tf_single_pt=0%1%0%1;  %%%%%%%%%Multi-point to be filled in later.
 ft_sill_idx=find(contains(cell_military_installations_data(:,1),'Ft Sill'));  %%%%%%%%Fort Sill
 base_polygon=cell2mat(cell_military_installations_data(ft_sill_idx,[2,3])')';
 base_polygon=base_polygon(~isnan(base_polygon(:,1)),:);  %%%%%%%%Remove the NaNs (In some cases, there are multiple "areas". Need to insert the code here to handle the multi-poly cases.)
-point_spacing_km=20; %%%%%%km. A rule of thumb, point spacing should be about 1/10th of maximum turnoff distance. 50km turnoff distance --> 5km point spacing
+point_spacing_km=5; %%%%%%km. A rule of thumb, point spacing should be about 1/10th of maximum turnoff distance. 50km turnoff distance --> 5km point spacing
 fort_sill=horzcat(34.73694444,-98.49194444,24);  %%%%%%Lat/Lon/Radius km
 
 if tf_single_pt==1
@@ -158,14 +158,11 @@ else
     %%%%%%%%%Multi-point code to be inserted in later. 
     %%%%%%%%%Either base_polygon line sampling or the 4-Point Circle.
 
-    %%%%%%%%%%%[sim_pt]=grid_points_app(app,base_polygon,point_spacing_km); %%%%%%%%%If you want to add grid points inside the base polygon
-
     %%%%%%'Draw a circle, intersect with the base'
     [cir_lat,cir_lon]=scircle1(fort_sill(1),fort_sill(2),km2deg(fort_sill(3)));
     poly_circle=polyshape(cir_lon,cir_lat);
     poly_base=polyshape(base_polygon(:,2),base_polygon(:,1));
     poly_int=intersect(poly_base,poly_circle);
-
 
     close all;
     figure;
@@ -175,7 +172,6 @@ else
     plot(poly_int,'FaceColor','k','FaceAlpha',1)
     plot_google_map('maptype','terrain','APIKey','AIzaSyCgnWnM3NMYbWe7N4svoOXE7B2jwIv28F8') %%%Google's API key made by nick.matlab.error@gmail.com
     pause(0.1)
-
 
     no_holes_poly_base=rmholes(poly_int);
     border_base_bound=fliplr(no_holes_poly_base.Vertices);
@@ -192,15 +188,6 @@ else
         line_steps=ceil(segment_dist_km/(min(dist_steps)))+1;
         up_sample_border_base_bound=curvspace_app(app,border_base_bound,line_steps);
 
-% %     figure;
-% %     hold on;
-% %     plot(border_base_bound(:,2),border_base_bound(:,1),'-ok')
-% %     grid on;
-% % 
-% %        figure;
-% %     hold on;
-% %     plot(up_sample_border_base_bound(:,2),up_sample_border_base_bound(:,1),'-ok')
-% %     grid on;
 
     %%%%%%%%%Find the "corners"
     border_base_bound=up_sample_border_base_bound;
@@ -251,53 +238,6 @@ else
     hold on;
     plot(convex_base_bound(:,2),convex_base_bound(:,1),'-b')
     plot(border_base_bound(int_idx,2),border_base_bound(int_idx,1),'ok')
-
-
-% % %     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Find the centroid distance to the convex_base_bound
-% % %     poly_convex=polyshape(convex_base_bound(:,2),convex_base_bound(:,1));
-% % %     no_poly_convex=rmholes(poly_convex);
-% % %     convex_bound=fliplr(no_poly_convex.Vertices);
-% % %     convex_bound=vertcat(convex_bound,convex_bound(1,:)); %%%%Close the circle
-% % % 
-% % %        %%%%%%%Resample convex_bound
-% % %     %%%%%%%%%Downsample each segment
-% % %         [temp_num_pts,~]=size(convex_bound);
-% % %         dist_steps=NaN(temp_num_pts-1,1);
-% % %         for j=1:1:temp_num_pts-1
-% % %             dist_steps(j)=deg2km(distance(convex_bound(j,1),convex_bound(j,2),convex_bound(j+1,1),convex_bound(j+1,2)));
-% % %         end
-% % %           segment_dist_km=sum(dist_steps,"omitnan");
-% % %         line_steps=ceil(segment_dist_km/(0.01))+1;
-% % %         convex_bound=curvspace_app(app,convex_bound,line_steps);
-% % % 
-% % %             [centroid_lon_convex,centroid_lat_convex]=centroid(poly_convex); 
-% % % 
-% % % 
-% % %     %%%%%%%%%%Find the distances between the centroid and the border_base_bound
-% % %     centroid_dist_convex_km=deg2km(distance(centroid_lat_convex,centroid_lon_convex,convex_bound(:,1),convex_bound(:,2)));
-% % %     
-% % %     %%%%% find corners
-% % %     [pks2,locs2_idx] = findpeaks(centroid_dist_convex_km,'SortStr','descend');
-% % % 
-% % %     close all;
-% % %     figure;
-% % %     hold on;
-% % %     plot(centroid_dist_convex_km,'-k')
-% % %     plot(locs2_idx,centroid_dist_convex_km(locs2_idx),'ob')
-% % %     text(locs2_idx+.02,pks2,num2str((1:numel(pks2))'))
-% % %     grid on;
-% % % 
-% % %     figure;
-% % %     hold on;
-% % %     plot(poly_int)
-% % %     %plot(centroid_lon,centroid_lat,'dg','LineWidth',3)
-% % %     plot(convex_bound(locs2_idx,2),convex_bound(locs2_idx,1),'ob')
-% % %     text(convex_bound(locs2_idx,2),convex_bound(locs2_idx,1),num2str((1:numel(pks2))'))
-% % %     grid on;
-
-
-
-    %%%%Find the Intersection of the convex_base_bound and the  pks
 
 
     %%%%%%%%%%Split into 4 sections, note this changes for based on the geometry of the location.
@@ -351,12 +291,60 @@ else
     grid on;
 
 
-% %          'START HERE: Check corners'
-% %     pause;
+% %         %%%%%%%%%%%%%%%%%%%%%%%Add internal Gridpoints: This is needed for areas with a high variation of terrain, for example Camp Pendleton
+% %         grid_step_size=1; %%%%%%%%In some cases, this needs to be a smaller grid point spacing. Mainly Terrain Dependent.
+% % 
+% %           %%%%%%%%%%%Find min/max border coordinates
+% %         minx=min(up_sample_border_base_bound(:,2));
+% %         maxx=max(up_sample_border_base_bound(:,2));
+% %         miny=min(up_sample_border_base_bound(:,1));
+% %         maxy=max(up_sample_border_base_bound(:,1));
+% %         x_pts=2;
+% %         x_dist=grid_step_size+1;
+% %         while(x_dist>grid_step_size)
+% %             x_array=linspace(minx,maxx,x_pts);
+% %             x_dist=deg2km(distance(miny,x_array(1),miny,x_array(2)));
+% %             x_pts=x_pts+1;
+% %         end
+% %         
+% %         y_pts=2;
+% %         y_dist=grid_step_size+1;
+% %         while(y_dist>grid_step_size)
+% %             y_array=linspace(miny,maxy,y_pts);
+% %             y_dist=deg2km(distance(y_array(1),minx,y_array(2),minx));
+% %             y_pts=y_pts+1;
+% %         end
+% % 
+% %         [x_grid,y_grid]=meshgrid(x_array,y_array);
+% %         x_grid=reshape(x_grid,[],1);
+% %         y_grid=reshape(y_grid,[],1);
+% %         
+% %         sample_pts=horzcat(y_grid,x_grid);
+% %         
+% %         %%%%%%%%%Only Keep the sample_pts inside the dpa
+% %         [num_sample_pts,y1]=size(sample_pts);
+% %         tf_inside=NaN(num_sample_pts,1);
+% %         for i=1:1:num_sample_pts
+% %             %disp_sub_progress(app,strcat(num2str(i/x1*100),'%'))
+% %             tf_inside(i)=isinterior(poly_int,sample_pts(i,2),sample_pts(i,1));
+% %         end
+% %         inside_idx=find(tf_inside==1);
+% %         sim_pt=vertcat(sim_pt,sample_pts(inside_idx,:));  %Add to sim_pts
+% %         sim_pt=unique(round(sim_pt,4),'rows');  %%%And row unique
+% % 
+% %         size(sim_pt)
+% % 
+% %         figure;
+% %         hold on;
+% %         plot(poly_int)
+% %         plot(sim_pt(:,2),sim_pt(:,1),'dr')
+% %         grid on;
 
 
-    'Check Multipoint base'
-    %pause;
+
+    'Check corners'
+    pause(1);
+
 end
 cell_sim_data=cell(1,6);
 %%%%%%%%1)Name, 2) Base Lat/Lon, 3) Radar Threshold, 4) Radar Height,
@@ -482,11 +470,6 @@ for base_idx=1:1:num_locations
     save(strcat(data_label1,'_min_ant_loss.mat'),'min_ant_loss')
 
     save(strcat(data_label1,'_centroid_latlon.mat'),'centroid_latlon')
- %%%%%%%%One way to create a sorted move list.
-%%%%%%%%After the pathloss, sort by power received (with the azimuth
-%%%%%%%%reduction) towards the centroid of the base. Just Put it at the
-%%%%%%%%front of the base_protection_pts
-
 
     %%%%%%%%Sim Bound
     [sim_bound]=calc_sim_bound(app,base_polygon,sim_radius_km,data_label1);

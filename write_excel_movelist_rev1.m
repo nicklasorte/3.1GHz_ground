@@ -98,7 +98,7 @@ function write_excel_movelist_rev1(app,num_ppts,move_list_reliability,sim_number
                         toc;
 
                         %%%%%Only do it for point_idx==1
-                        if point_idx==1
+                        %if point_idx==1
                             fed_azi_loss=sorted_array_fed_azi_data;
                             table_fed_azi_data=array2table(fed_azi_loss);
                             tic;
@@ -112,7 +112,7 @@ function write_excel_movelist_rev1(app,num_ppts,move_list_reliability,sim_number
                             writetable(table_mc_pr_dbm,strcat(data_label1,'_Point',num2str(point_idx),'_Pr_dBm_Azi.xlsx'));
                             toc; %%%%%%%%%60 seconds
                             pause(0.1)
-                        end
+                        %end
                     end
 
 end

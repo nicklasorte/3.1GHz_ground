@@ -17,7 +17,7 @@ rev_folder='C:\Local Matlab Data\3.1GHz\Github_Ground\Rev104'
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Toolbox Check (Sims can run without the Parallel Toolbox)
-parallel_flag=1%0%1%0%1%0%1%0%1%0%1%0%1 %%%%%0 --> serial, 1 --> parallel
+parallel_flag=1%0%1%0%1%0%1%0%1%0%1 %%%%%0 --> serial, 1 --> parallel
 [workers,tf_parallel]=check_parallel_toolbox(app,parallel_flag);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Function to package
