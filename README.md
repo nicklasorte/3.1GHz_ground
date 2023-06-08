@@ -8,6 +8,20 @@ This will perform the calculation.
 
 ==========================================================================
 
+The simulation will output Excel files that contain all the Link Budget information, so that the calculations can be checked.
+
+For Example: to check the power received (from each Base Station to the Federal System):
+
+[Column T (FtSill_GB1_Point1_Link_Budget.xlsx)] – [Federal Antenna Loss (FtSill_GB1_Point1_Fed_Azi_Ant_Loss.xlsx)] = [(FtSill_GB1_Point1_Pr_dBm_Azi.xlsx)]
+
+In this example, there are 240 azimuths that the federal system is pointing. (0-360 with a 1.5 degreee step size.)
+
+To calculate the aggregate interferece, for each azimuth, in [FtSill_GB1_Point1_Pr_dBm_Azi.xlsx], the column "IH", a "1" indicates that the Base Station will be be turned-off. A "0" indicates that a Base Station can transmit.
+
+Copy the sheet, cut the rows of Base Stations that need to be turned off, convert from dBm to Watts, sum each column (which is a discrete azimuth), and convert back to dBm.
+
+==========================================================================
+
 There is an option to run the simulation with the parallel toolbox. (If you have it.)
 
 https://www.mathworks.com/products/parallel-computing.html
