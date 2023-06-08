@@ -55,6 +55,16 @@ https://www.mathworks.com/help/antenna/ref/rfprop.tirem.html
 
 ======================================================================================
 
+If you don't have the Parallel Toolbox, you can still leverage the parallel function on a server with Matlab Runtime.
+
+https://www.mathworks.com/products/compiler/matlab-runtime.html
+
+Download the R2022b (9.13) release and install on your machine.
+
+Let me know if you are doing this and I will compile the app for you.
+
+======================================================================================
+
 If you can't download the ITM code and Terrain Database (6GB) and don't have the antenna toolbox, there is a matlab runtime version available that allows you to run the analysis.
 
 https://www.mathworks.com/products/compiler/matlab-runtime.html
@@ -64,4 +74,7 @@ Download the R2022b (9.13) release and install on your machine.
 When you run the analysis, you will still need an active internet connection to access the Matlab terrain data.
 
 In this case, a basic version of Matlab is only needed to initalize the simulation parameters.
+
+Let me know if you are doing this and I will compile the app for you.
+
 
