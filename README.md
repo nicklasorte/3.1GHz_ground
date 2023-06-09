@@ -1,3 +1,22 @@
+Example code to show the ground-based calculation.
+==========================================================================
+==========================================================================
+IMPORTANT: THIS IS NOT THE CODE BEING USED BY DOD IN THE PATHSS STUDY
+Note: Some things have been simplified for understanding to the reader and to decrease the computational time.
+The simplifications are noted. The simplifications do not result in a large delta-dB.
+
+Note that ITM is being used, instead of TIREM. 
+To run TIREM, an additional matlab toolbox and TIREM license need to be purchased.
+To remove the variable of different terrain databases, a 3 arc-second database is available. 
+In most cases, this simplification to a lower resolution terrain database results in a minimum delta-db difference.
+
+Note: Some input parameters are placeholders and do not reflect the input parameters used in the DoD Pathss Study. 
+Placeholder values try to provide a close-enough parameter to illustrate the analysis methodology.
+
+========================================================================== 
+==========================================================================
+
+
 To initialize a simulation, run the file "initialize_sim_folder_ground_based_rev4_github_check.m"
 
 This will create a simulation folder "Rev104" that has a Fort Sill Example.
