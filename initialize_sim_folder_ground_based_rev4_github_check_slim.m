@@ -136,7 +136,7 @@ pol_mismatch=1.5; %%%%%%%%%%The loss associated with the mismatch of the interfe
 %%%%%%%%%%%%%%%%%%Federal Location
 %%%%%%% Simplification --> A single point will be used (single point)
 %%%%%%% [Multi-Point increases run time.] Not a large delta - dB for smaller operational areas.  However, dependent on the single point, specifically terrain for the propagation model.
-tf_single_pt=1%0%1%0%1;  %%%%%%%%%Multi-point to be filled in later. 
+tf_single_pt=0%1%0%1;  %%%%%%%%%Multi-point to be filled in later. 
 ft_sill_idx=find(contains(cell_military_installations_data(:,1),'Ft Sill'));  %%%%%%%%Fort Sill
 base_polygon=cell2mat(cell_military_installations_data(ft_sill_idx,[2,3])')';
 base_polygon=base_polygon(~isnan(base_polygon(:,1)),:);  %%%%%%%%Remove the NaNs (In some cases, there are multiple "areas". Need to insert the code here to handle the multi-poly cases.)
@@ -224,8 +224,6 @@ else
     plot(pt_idx,centroid_dist_km(pt_idx),'sr','LineWidth',2)
     grid on;
 
-    pause;
-
     figure;
     hold on;
     plot(poly_int)
@@ -252,39 +250,7 @@ else
     four_corners_idx=sort(locs_idx(1:3))
     four_corners_idx=sort(vertcat(four_corners_idx,pt_idx))
 
-    %%%%%%%'Add the 3 Peaks and the Fourth Point'
-    [num_base_points,~]=size(border_base_bound);
-    cell_bound_segments=cell(num_segments,1);
-    for i=1:1:num_segments
-        if i==num_segments
-            start_idx=four_corners_idx(i);
-            end_idx=four_corners_idx(1);
-        else
-            start_idx=four_corners_idx(i);
-            end_idx=four_corners_idx(i+1);
-        end
-        
-        %%%%Check if end_idx<start_idx
-        if end_idx<start_idx
-            %%%'Need to include the cross over'
-            temp_pt_idx=horzcat(start_idx:1:num_base_points,1:1:end_idx);
-        else
-            temp_pt_idx=start_idx:1:end_idx;
-        end
-        temp_line=border_base_bound(temp_pt_idx,:);
-
-        %%%%%%%%%Downsample each segment
-        [temp_num_pts,~]=size(temp_line);
-        dist_steps=NaN(temp_num_pts-1,1);
-        for j=1:1:temp_num_pts-1
-            dist_steps(j)=deg2km(distance(temp_line(j,1),temp_line(j,2),temp_line(j+1,1),temp_line(j+1,2)));
-        end
-        segment_dist_km=sum(dist_steps,"omitnan");
-        line_steps=ceil(segment_dist_km/(point_spacing_km))+1;
-        cell_bound_segments{i}=curvspace_app(app,temp_line,line_steps);
-    end
-
-    temp_sample_pts=vertcat(cell_bound_segments{:});
+    temp_sample_pts=border_base_bound(four_corners_idx,:)  
     uni_sample_pts=unique(temp_sample_pts,'rows');  %%%And row unique
     centroid_latlon=horzcat(centroid_lat,centroid_lon);
     sim_pt=vertcat(centroid_latlon,uni_sample_pts); %%%%%%%%Add the centroid for good luck
@@ -296,62 +262,10 @@ else
     plot(poly_int)
     plot(sim_pt(:,2),sim_pt(:,1),'ok')
     grid on;
-
-
-% %         %%%%%%%%%%%%%%%%%%%%%%%Add internal Gridpoints: This is needed for areas with a high variation of terrain, for example Camp Pendleton
-% %         grid_step_size=1; %%%%%%%%In some cases, this needs to be a smaller grid point spacing. Mainly Terrain Dependent.
-% % 
-% %           %%%%%%%%%%%Find min/max border coordinates
-% %         minx=min(up_sample_border_base_bound(:,2));
-% %         maxx=max(up_sample_border_base_bound(:,2));
-% %         miny=min(up_sample_border_base_bound(:,1));
-% %         maxy=max(up_sample_border_base_bound(:,1));
-% %         x_pts=2;
-% %         x_dist=grid_step_size+1;
-% %         while(x_dist>grid_step_size)
-% %             x_array=linspace(minx,maxx,x_pts);
-% %             x_dist=deg2km(distance(miny,x_array(1),miny,x_array(2)));
-% %             x_pts=x_pts+1;
-% %         end
-% %         
-% %         y_pts=2;
-% %         y_dist=grid_step_size+1;
-% %         while(y_dist>grid_step_size)
-% %             y_array=linspace(miny,maxy,y_pts);
-% %             y_dist=deg2km(distance(y_array(1),minx,y_array(2),minx));
-% %             y_pts=y_pts+1;
-% %         end
-% % 
-% %         [x_grid,y_grid]=meshgrid(x_array,y_array);
-% %         x_grid=reshape(x_grid,[],1);
-% %         y_grid=reshape(y_grid,[],1);
-% %         
-% %         sample_pts=horzcat(y_grid,x_grid);
-% %         
-% %         %%%%%%%%%Only Keep the sample_pts inside the dpa
-% %         [num_sample_pts,y1]=size(sample_pts);
-% %         tf_inside=NaN(num_sample_pts,1);
-% %         for i=1:1:num_sample_pts
-% %             %disp_sub_progress(app,strcat(num2str(i/x1*100),'%'))
-% %             tf_inside(i)=isinterior(poly_int,sample_pts(i,2),sample_pts(i,1));
-% %         end
-% %         inside_idx=find(tf_inside==1);
-% %         sim_pt=vertcat(sim_pt,sample_pts(inside_idx,:));  %Add to sim_pts
-% %         sim_pt=unique(round(sim_pt,4),'rows');  %%%And row unique
-% % 
-% %         size(sim_pt)
-% % 
-% %         figure;
-% %         hold on;
-% %         plot(poly_int)
-% %         plot(sim_pt(:,2),sim_pt(:,1),'dr')
-% %         grid on;
-
-
-    size(sim_pt)  %%%27points
+    size(sim_pt) 
 
     'Check corners'
-    pause(1);
+    pause(0.1);
 
 end
 cell_sim_data=cell(1,6);
