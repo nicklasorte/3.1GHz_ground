@@ -22,7 +22,7 @@ To initialize a simulation, run the file "initialize_sim_folder_ground_based_rev
 
 This will create a simulation folder "Rev104" that has a Fort Sill Example. (This might be hard to run on a desktop computer.)
 
-A more simplified simulation can be done by running the file
+A more simplified simulation can be done by running the file "initialize_sim_folder_ground_based_rev4_github_check_slim.m"
 
 This will create the simulation folder "Rev105" that has a Fort Sill Example.
 
