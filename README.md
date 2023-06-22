@@ -119,7 +119,7 @@ When you run the analysis, you will still need an active internet connection to 
 
 In this case, a basic version of Matlab is only needed to initalize the simulation parameters.
 
-The app is {XXXXXX} (For this version of the App you will still need the Terrain Database downloaded, but no internet connection needed.)
+The app is "ground_3GHz_rev1.exe" (For this version of the App you will still need the Terrain Database downloaded, but no internet connection needed.)
 
 ======================================================================================
 
