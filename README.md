@@ -20,7 +20,11 @@ Placeholder values try to provide a close-enough parameter to illustrate the ana
 
 To initialize a simulation, run the file "initialize_sim_folder_ground_based_rev4_github_check.m"
 
-This will create a simulation folder "Rev104" that has a Fort Sill Example.
+This will create a simulation folder "Rev104" that has a Fort Sill Example. (This might be hard to run on a desktop computer.)
+
+A more simplified simulation can be done by running the file
+
+This will create the simulation folder "Rev105" that has a Fort Sill Example.
 
 Then run the file "init_run_sim_folder_ground_based_rev1_github_check.m"
 
