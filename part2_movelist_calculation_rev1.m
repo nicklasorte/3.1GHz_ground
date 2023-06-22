@@ -179,7 +179,7 @@ if ~isempty(zero_idx)==1
 
                     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Calculate first-->Parfor --> No data load
                     if parallel_flag==1
-                        disp_progress(app,strcat('Starting the Parfor Move List'))
+                        disp_progress(app,strcat('Starting the Parfor Move List: Maybe 1-2 mins:(per point with 1 Monte Carlo Iteration)'))
                         [hWaitbar,hWaitbarMsgQueue]= ParForWaitbarCreateMH_time('Move List: ',num_ppts);    %%%%%%% Create ParFor Waitbar
                         parfor point_idx=1:num_ppts
                             pre_sort_movelist_rev5_app(app,move_list_reliability,point_idx,sim_number,mc_size,radar_beamwidth,base_protection_pts,min_ant_loss,radar_threshold,mc_percentile,sim_array_list_bs,data_label1,reliability,norm_aas_zero_elevation_data);
@@ -188,6 +188,7 @@ if ~isempty(zero_idx)==1
                         delete(hWaitbarMsgQueue);
                         close(hWaitbar);
                     end
+
 
                     %%%%%%%%%%%Then for each point, scrap the data and save to excel. Only hold onto 1 point data at a time.
                     %%%%%%%%For this case (1 Monte Carlo Iteration), we really don't need to save most of the data, only the optimized move list order.
@@ -243,8 +244,8 @@ if ~isempty(zero_idx)==1
 
 
                     %%%%%%%%%%%Find those base stations to be kept on
-                    close all;
-                    figure;
+                    %%close all; %%%%%%%%%%%This is closing the waitbar.
+                    f1=figure;
                     hold on;
                     plot(union_turn_off_list_data(:,2),union_turn_off_list_data(:,1),'sr','LineWidth',2)
                     plot(base_polygon(:,2),base_polygon(:,1),'-b','LineWidth',3)
@@ -261,8 +262,11 @@ if ~isempty(zero_idx)==1
                     filename1=strcat(data_label1,'_Off.png');
                     pause(0.1)
                     saveas(gcf,char(filename1))
+                    pause(0.1)
+                    close(f1)
 
-                    figure;
+
+                    f2=figure;
                     hold on;
                     histogram(knn_dist_bound)
                     grid on;
@@ -271,7 +275,8 @@ if ~isempty(zero_idx)==1
                     filename1=strcat(data_label1,'_Histogram_Turn_Off_Distance.png');
                     pause(0.1)
                     saveas(gcf,char(filename1))
-
+                    pause(0.1)
+                    close(f2)
 
               
 
@@ -289,24 +294,24 @@ if ~isempty(zero_idx)==1
                 end
                 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Can make this the simple move list/union Function (non-mitigations)
 
-                %%%%%%%%%%Save
-                [var_exist_complete]=persisent_file_exist_app(app,complete_filename);
-                if var_exist_complete==2
-                    %%%%%Nothing
-                else
-                    retry_save=1;
-                    while(retry_save==1)
-                        try
-                            complete=NaN(1);
-                            %save(complete_filename,'complete')
-                            pause(0.1);
-                            retry_save=0;
-                        catch
-                            retry_save=1;
-                            pause(0.1)
-                        end
-                    end
-                end
+%                 %%%%%%%%%%Save
+%                 [var_exist_complete]=persisent_file_exist_app(app,complete_filename);
+%                 if var_exist_complete==2
+%                     %%%%%Nothing
+%                 else
+%                     retry_save=1;
+%                     while(retry_save==1)
+%                         try
+%                             complete=NaN(1);
+%                             %save(complete_filename,'complete')
+%                             pause(0.1);
+%                             retry_save=0;
+%                         catch
+%                             retry_save=1;
+%                             pause(0.1)
+%                         end
+%                     end
+%                 end
             end
             %%%%%%%%%%%%%%%%%%%%%%%%Single Location Should be complete at this point
 

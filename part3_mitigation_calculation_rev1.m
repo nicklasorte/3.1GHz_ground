@@ -231,8 +231,9 @@ if ~isempty(zero_idx)==1
                         %%%%%%%%'Export the union move List of the Base Stations'
                         mitigation_union_mitigation_list_data(1,:)
                         [~,sort_union_idx]=sort(mitigation_union_mitigation_list_data(:,5));
-                        table_union_move_list_miti=array2table(mitigation_union_mitigation_list_data(sort_union_idx,[1,2,3,5,6,7,9]));
-                        table_union_move_list_miti.Properties.VariableNames={'BS_Latitude' 'BS_Longitude' 'BS_Height' 'Uni_Id' 'NLCD' 'Sector_Azi' 'EIRP'};
+                        miti_eirp=mitigation_union_mitigation_list_data(:,9)-mitigation_union_mitigation_list_data(:,15);
+                        table_union_move_list_miti=array2table(horzcat(mitigation_union_mitigation_list_data(sort_union_idx,[1,2,3,5,6,7]),miti_eirp));
+                        table_union_move_list_miti.Properties.VariableNames={'BS_Latitude' 'BS_Longitude' 'BS_Height' 'Uni_Id' 'NLCD' 'Sector_Azi' 'Mitigation_EIRP'};
                         tic;
                         writetable(table_union_move_list_miti,strcat(data_label1,'_Union_Move_List_Mitigation.xlsx'),'Sheet','Mitigation');
                         toc;
@@ -264,8 +265,8 @@ if ~isempty(zero_idx)==1
                         max_knn_dist_miti=ceil(max(knn_dist_bound))
 
                        
-                        close all;
-                        figure;
+                        %%%close all;  %%%%%%[close all] creates problems in the app
+                        f3=figure;
                         hold on;
                         plot(mitigation_union_mitigation_list_data(:,2),mitigation_union_mitigation_list_data(:,1),'dy','LineWidth',2)
                         plot(mitigation_union_turn_off_list_data(:,2),mitigation_union_turn_off_list_data(:,1),'sr','LineWidth',2)
@@ -284,6 +285,8 @@ if ~isempty(zero_idx)==1
                         filename1=strcat(data_label1,'_Off_Mitigation.png');
                         pause(0.1)
                         saveas(gcf,char(filename1))
+                        pause(0.1)
+                        close(f3)
 
                         retry_save=1;
                         while(retry_save==1)
