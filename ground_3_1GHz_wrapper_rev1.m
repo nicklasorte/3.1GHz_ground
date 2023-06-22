@@ -1,4 +1,4 @@
-function ground_3_1GHz_wrapper_rev1(app,rev_folder,parallel_flag,workers)
+function ground_3_1GHz_wrapper_rev1(app,rev_folder,parallel_flag,workers,tf_write_movelist_excel)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Function to package
 cd(rev_folder)
@@ -123,7 +123,7 @@ part1_calc_pathloss_3dot1GHz_rev1(app,rev_folder,folder_names,parallel_flag,sim_
 'Will add TIREM/Longly-Rice as other options, but those require the matlab antenna toolbox.'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Part 2: Calculate the Move List (No Mitigations)
-tf_write_movelist_excel=1%0%%%%1
+%%%tf_write_movelist_excel=0%1%0%%%%1
 part2_movelist_calculation_rev1(app,folder_names,parallel_flag,rev_folder,workers,move_list_reliability,sim_number,mc_size,mc_percentile,reliability,norm_aas_zero_elevation_data,tf_write_movelist_excel)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Part 3: Calculate the Move List (With Mitigations)
