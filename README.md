@@ -119,6 +119,9 @@ When you run the analysis, you will still need an active internet connection to 
 
 In this case, a basic version of Matlab is only needed to initalize the simulation parameters.
 
-Let me know if you are doing this and I will compile the app for you.
+The app is "ground_3GHz_rev1.exe"
+
+
+
 
 
