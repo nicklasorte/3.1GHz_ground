@@ -1,4 +1,4 @@
-function [workers,tf_parallel]=check_parallel_toolbox(app,parallel_flag)
+function [workers,parallel_flag]=check_parallel_toolbox(app,parallel_flag)
 
 if parallel_flag==1
     toolbox_pull = ver;
@@ -20,6 +20,7 @@ if tf_parallel==1 && parallel_flag==1
     workers=min([ram_workers,max_cores]);
     %%%%%Recommend something about total min([RAM/2GB or max_cores])
 else
+    parallel_flag=0;
     workers=1;
 end
 
