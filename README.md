@@ -143,5 +143,17 @@ in the MathWorks Documentation Center.
 
 ======================================================
 
+For the shipborne example, use: https://github.com/nicklasorte/3.1GHz_ground/blob/main/initialize_sim_folder_shipborne_rev2_clean_up.m
+
+This file will initialize set of folders.
+In this example, it’s just one point (#1750), in the ocean, 10km off shore, near Norfolk.
+The same code that is used to run the ground based systems is also used for the shipborne systems.
+Just point the code at the “Rev###” folder.
+The outputs are the same, with the excel spread sheets and figure.
+
+Any set of points, 10km off shore, can be chosen. (Similar to the CBRS DPAs.)
+The CBRS ports, like Norfolk, San Diego, etc, are also included and run the same way.
+To select which points to simulate, change the code on lines 140-142.
+
 
 
