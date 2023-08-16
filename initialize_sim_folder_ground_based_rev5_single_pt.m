@@ -283,7 +283,6 @@ for base_idx=1:1:num_locations
 
     figure;
     hold on;
-    plot(poly_int)
     plot(sim_pt(:,2),sim_pt(:,1),'ok')
     grid on;
     size(sim_pt)
