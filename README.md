@@ -62,6 +62,14 @@ For example, if a server has 24 cores, but there are only 10 protection points f
 
 Parallel functions include: Pathloss, Movelist, Movelist with Mitigation, and Aggregate Check.
 
+=========================================================================
+
+At this time, the Mapping Toolbox is needed to run the matlab code.
+
+https://www.mathworks.com/products/mapping.html
+
+I'm trying to remove this dependency.
+
 ==========================================================================
 
 To run ITM (propagation model) you'll need to download some files (6GBs: Too big to upload here.) 
