@@ -1,8 +1,12 @@
 function [workers,parallel_flag]=check_parallel_toolbox(app,parallel_flag)
 
 if parallel_flag==1
-    toolbox_pull = ver;
-    tf_parallel=any(strcmp(cellstr(char(toolbox_pull.Name)), 'Parallel Computing Toolbox'));
+    if isdeployed==1
+        tf_parallel=1;
+    else
+        toolbox_pull = ver;
+        tf_parallel=any(strcmp(cellstr(char(toolbox_pull.Name)), 'Parallel Computing Toolbox'));
+    end
 else
     tf_parallel=0;
 end
